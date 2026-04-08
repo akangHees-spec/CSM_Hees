@@ -12,12 +12,12 @@
             <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">iLanding</h1>
+                <h1 class="sitename">Techira Indonesia</h1>
             </a>
 
             @include('partials.landing.navbar')
 
-            <a class="btn-getstarted" href="index.html#about">Get Started</a>
+            <a class="btn-getstarted" href="index.html#about">Masuk Admin</a>
 
         </div>
     </header>
