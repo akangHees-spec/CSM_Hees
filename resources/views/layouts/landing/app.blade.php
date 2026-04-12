@@ -17,7 +17,7 @@
 
             @include('partials.landing.navbar')
 
-            <a class="btn-getstarted" href="index.html#about">Masuk Admin</a>
+            <a class="btn-getstarted" href="{{ route('login') }}">Masuk Admin</a>
 
         </div>
     </header>
