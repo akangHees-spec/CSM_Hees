@@ -1,11 +1,32 @@
 @include('layouts.admin.head')
 
-<body
-    class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
-    <div class="group-data-[sidebar-size=sm]:min-h-sm group-data-[sidebar-size=sm]:relative">
+<!--*******************
+        Preloader start
+    ********************-->
+<div id="preloader">
+    <div class="lds-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!--*******************
+        Preloader end
+    ********************-->
 
-        @include('partials.admin.navbar')
-        @include('partials.admin.sidebar')
-        @yield('content')
+<!--**********************************
+        Main wrapper start
+    ***********************************-->
+<div id="main-wrapper">
 
-@include('layouts.admin.footer')
+    @include('partials.admin.navbar')
+    @include('partials.admin.sidebar')
+
+    @yield('content')
+
+    @include('layouts.admin.footer')
+    @include('layouts.admin.script')
+    @stack('script')
+
+    </body>
+
+    </html>

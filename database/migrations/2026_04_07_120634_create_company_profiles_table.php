@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->id();
             $table->string('company_name');
+            $table->string('banner');
+            $table->string('title');
             $table->string('tagline');
             $table->text('description');
-            $table->text('vision');
-            $table->text('mission');
+            $table->string('count');
+            $table->string('icon_title');
+            $table->string('icon_subtitle');
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }

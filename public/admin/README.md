@@ -1,2 +1,2 @@
-# -Premium-Multipurpose-Admin-Dashboard-Template
-Responsive Design: Admin Template Pro is built with a responsive layout, ensuring that the interface adapts to different screen sizes and devices. This makes it accessible and user-friendly on desktops, tablets, and mobile devices. Bootstrap 5 Framework: The template is based on Bootstrap 5
+# Admin-Dashboard-Template-Bootstrap-5
+Good– this Admin Template v2 was designed by the best minds in the dashboard world to help others organize and fine-tune information panels, layouts, and UI elements.

@@ -11,9 +11,13 @@ class CompanyProfile extends Model
 
     protected $fillable = [
         'company_name', 
+        'banner', 
+        'title', 
         'tagline', 
         'description', 
-        'vision', 
-        'mission'
+        'count', 
+        'icon_title', 
+        'icon_subtitle', 
+        'order'
     ];
 }

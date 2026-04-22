@@ -1,230 +1,569 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Index Home')
-@section('content')
+@section('title', 'Home - Company Profile')
 
-    <div
-        class="group-data-[sidebar-size=lg]:ltr:md:ml-vertical-menu group-data-[sidebar-size=lg]:rtl:md:mr-vertical-menu group-data-[sidebar-size=md]:ltr:ml-vertical-menu-md group-data-[sidebar-size=md]:rtl:mr-vertical-menu-md group-data-[sidebar-size=sm]:ltr:ml-vertical-menu-sm group-data-[sidebar-size=sm]:rtl:mr-vertical-menu-sm pt-[calc(theme('spacing.header')_*_1)] pb-[calc(theme('spacing.header')_*_0.8)] px-4 group-data-[navbar=bordered]:pt-[calc(theme('spacing.header')_*_1.3)] group-data-[navbar=hidden]:pt-0 group-data-[layout=horizontal]:mx-auto group-data-[layout=horizontal]:max-w-screen-2xl group-data-[layout=horizontal]:px-0 group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:ltr:md:ml-auto group-data-[layout=horizontal]:group-data-[sidebar-size=lg]:rtl:md:mr-auto group-data-[layout=horizontal]:md:pt-[calc(theme('spacing.header')_*_1.6)] group-data-[layout=horizontal]:px-3 group-data-[layout=horizontal]:group-data-[navbar=hidden]:pt-[calc(theme('spacing.header')_*_0.9)]">
-        <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
+@section('content')
+    <style>
+        /* ─── Base ───────────────────────────────────────── */
+        .cp-page {
+            padding-bottom: 2.5rem;
+        }
+
+        /* ─── Hero Card (Banner) ─────────────────────────── */
+        .cp-hero {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            margin-bottom: 1.875rem;
+            min-height: 260px;
+            display: flex;
+            align-items: flex-end;
+            background: linear-gradient(135deg, #886CC0 0%, #5d44a2 100%);
+            box-shadow: 0 0.625rem 1.25rem 0 rgba(0, 0, 0, 0.08);
+        }
+
+        .cp-hero-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .cp-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30, 10, 60, 0.80) 0%, rgba(30, 10, 60, 0.25) 55%, transparent 100%);
+            z-index: 2;
+        }
+
+        .cp-hero-body {
+            position: relative;
+            z-index: 3;
+            padding: 2rem 2.25rem;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .cp-hero-body .cp-company-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 4px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .cp-hero-body .cp-title-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(6px);
+            color: #fff;
+            border-radius: 2rem;
+            padding: 4px 14px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .cp-hero-body .cp-tagline {
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 6px;
+        }
+
+        .cp-hero-no-banner {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .cp-hero-no-banner i {
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 12px;
+        }
+
+        .cp-hero-no-banner p {
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* ─── Fillow-style Card ──────────────────────────── */
+        .cp-card {
+            background: #fff;
+            border-radius: 1.25rem;
+            box-shadow: 0 0.625rem 1.25rem 0 rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.875rem;
+            border: 0;
+            overflow: hidden;
+        }
+
+        .cp-card-header {
+            padding: 1.1rem 1.75rem;
+            border-bottom: 1px solid #f0f1f3;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .cp-card-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cp-card-header i {
+            color: #886CC0;
+            font-size: 1rem;
+        }
+
+        .cp-card-header h5 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .cp-card-body {
+            padding: 1.75rem;
+        }
+
+        /* ─── Info Table ─────────────────────────────────── */
+        .cp-info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cp-info-table tr {
+            border-bottom: 1px solid #f5f6f8;
+        }
+
+        .cp-info-table tr:last-child {
+            border-bottom: 0;
+        }
+
+        .cp-info-table th {
+            padding: 0.75rem 0;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            width: 38%;
+            vertical-align: top;
+        }
+
+        .cp-info-table td {
+            padding: 0.75rem 0;
+            font-size: 0.875rem;
+            color: #3d4461;
+            vertical-align: top;
+        }
+
+        .cp-info-table td strong {
+            color: #000;
+            font-weight: 600;
+        }
+
+        /* ─── Badge ──────────────────────────────────────── */
+        .cp-badge {
+            display: inline-block;
+            background: #f0ebff;
+            color: #886CC0;
+            border-radius: 2rem;
+            padding: 3px 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .cp-badge-gray {
+            background: #f0f1f5;
+            color: #717579;
+        }
+
+        /* ─── Description block ──────────────────────────── */
+        .cp-desc-block {
+            background: #f8f9fc;
+            border-radius: 1rem;
+            padding: 1.25rem 1.5rem;
+            font-size: 0.875rem;
+            color: #717579;
+            line-height: 1.85;
+            border-left: 3px solid #886CC0;
+        }
+
+        /* ─── Stat Grid ──────────────────────────────────── */
+        .cp-stat-box {
+            border: 1px solid #EBEEF2;
+            border-radius: 1.25rem;
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+            background: #fff;
+            height: 100%;
+            transition: box-shadow 0.2s, transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cp-stat-box:hover {
+            box-shadow: 0 8px 24px rgba(136, 108, 192, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .cp-stat-icon-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #f0ebff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cp-stat-icon-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .cp-stat-icon-circle i {
+            color: #886CC0;
+            font-size: 1.4rem;
+        }
+
+        .cp-stat-big {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #886CC0;
+            line-height: 1;
+        }
+
+        .cp-stat-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #3d4461;
+        }
+
+        .cp-stat-sub {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .cp-stat-value {
+            font-size: 0.875rem;
+            color: #3d4461;
+            font-weight: 500;
+        }
+
+        .cp-stat-caption {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+        /* ─── Timestamp row ──────────────────────────────── */
+        .cp-timestamps {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            padding: 1rem 1.75rem;
+            background: #fafbfc;
+            border-top: 1px solid #f0f1f3;
+        }
+
+        .cp-timestamps .cp-ts-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.78rem;
+            color: #9ca3af;
+        }
+
+        .cp-timestamps .cp-ts-item i {
+            color: #886CC0;
+            font-size: 0.75rem;
+        }
+
+        .cp-timestamps .cp-ts-item span {
+            color: #3d4461;
+            font-weight: 500;
+        }
+
+        /* ─── Edit Button ────────────────────────────────── */
+        .btn-fillow {
+            background: #886CC0;
+            color: #fff;
+            border-radius: 0.75rem;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+
+        .btn-fillow:hover {
+            background: #6e52a4;
+            color: #fff;
+        }
+
+        /* ─── Empty state ────────────────────────────────── */
+        .cp-empty {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #9ca3af;
+        }
+
+        .cp-empty i {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            opacity: 0.4;
+            display: block;
+        }
+
+        .cp-empty p {
+            margin: 0;
+            font-size: 0.875rem;
+        }
+    </style>
+
+    <div class="content-body cp-page">
+        <div class="container-fluid">
 
             {{-- Breadcrumb --}}
-            <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
-                <div class="grow">
-                    <h5 class="text-16">Company Profile</h5>
-                </div>
-                <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
-                    <li
-                        class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1 before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">Home</a>
-                    </li>
-                    <li class="text-slate-700 dark:text-zink-100">
-                        Company Profile
-                    </li>
-                </ul>
+            <div class="row page-titles">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Company Profile</a></li>
+                </ol>
             </div>
 
-            <div class="grid grid-cols-1 gap-x-5 xl:grid-cols-12">
+            {{-- Alert Success --}}
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" style="border-radius: 0.75rem;" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Berhasil!</strong> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
 
-                {{-- LEFT COLUMN: Logo & Info Singkat --}}
-                <div class="xl:col-span-4">
-                    <div class="sticky top-[calc(theme('spacing.header')_*_1.3)] mb-5">
+            @if ($profile)
 
-                        {{-- Card Logo Perusahaan --}}
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="grid grid-cols-1 gap-5 md:grid-cols-12">
-                                    {{-- Logo utama (besar) --}}
-                                    <div
-                                        class="rounded-md md:col-span-12 bg-slate-100 dark:bg-zink-600 flex items-center justify-center p-8">
-                                        @if ($profile->logo)
-                                            <img src="{{ asset('storage/' . $profile->logo) }}"
-                                                alt="Logo {{ $profile->company_name }}"
-                                                class="max-h-40 object-contain">
-                                        @else
-                                            <div
-                                                class="flex items-center justify-center w-24 h-24 rounded-full bg-custom-100 dark:bg-custom-500/20">
-                                                <i data-lucide="building-2" class="text-custom-500 size-12"></i>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
+                {{-- ── Hero / Banner ── --}}
+                <div class="cp-hero">
+                    @if ($profile->banner)
+                        <img src="{{ asset('storage/' . $profile->banner) }}" alt="Banner" class="cp-hero-img">
+                        <div class="cp-hero-overlay"></div>
+                        <div class="cp-hero-body">
+                            <div>
+                                <h2 class="cp-company-name">{{ $profile->company_name }}</h2>
+                                @if ($profile->title)
+                                    <span class="cp-title-badge">{{ $profile->title }}</span>
+                                @endif
+                                @if ($profile->tagline)
+                                    <p class="cp-tagline"><i class="fas fa-quote-left fa-xs me-1"
+                                            style="opacity:.5;"></i>{{ $profile->tagline }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    @else
+                        <div class="cp-hero-no-banner">
+                            <i class="fas fa-image"></i>
+                            <p>Belum ada banner — <a href="{{ route('sigma.company-profile.edit') }}"
+                                    style="color:rgba(255,255,255,0.8); text-decoration:underline;">tambahkan sekarang</a>
+                            </p>
+                        </div>
+                        <div class="cp-hero-body" style="padding-top:0;">
+                            <div></div>
+                            <a href="{{ route('sigma.company-profile.edit') }}" class="btn-fillow">
+                                <i class="fas fa-edit"></i> Edit Profil
+                            </a>
+                        </div>
+                    @endif
+                </div>
 
-                                {{-- Tombol Edit --}}
-                                <div class="flex gap-2 mt-4 shrink-0">
-                                    <a href="{{ route('home.edit') }}"
-                                        class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">
-                                        <i data-lucide="file-edit"
-                                            class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
-                                        <span class="align-middle">Edit Profile</span>
-                                    </a>
-                                </div>
+                {{-- ── Row: Info + Deskripsi ── --}}
+                <div class="row">
 
-                                {{-- Link Tambahan --}}
-                                <div class="flex items-center gap-3 mt-3 justify-evenly">
-                                    <a href="#section-vision"
-                                        class="transition-all duration-300 ease-linear hover:text-custom-500">
-                                        <i data-lucide="eye" class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
-                                        <span class="align-middle">Visi</span>
-                                    </a>
-                                    <a href="#section-mission"
-                                        class="transition-all duration-300 ease-linear hover:text-custom-500">
-                                        <i data-lucide="target"
-                                            class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
-                                        <span class="align-middle">Misi</span>
-                                    </a>
-                                    <a href="#section-description"
-                                        class="transition-all duration-300 ease-linear hover:text-custom-500">
-                                        <i data-lucide="info"
-                                            class="inline-block align-middle size-3 ltr:mr-1 rtl:ml-1"></i>
-                                        <span class="align-middle">Tentang</span>
-                                    </a>
+                    {{-- Informasi Perusahaan --}}
+                    <div class="col-xl-5 col-lg-6">
+                        <div class="cp-card">
+                            <div class="cp-card-header">
+                                <div class="cp-card-header-left">
+                                    <i class="fas fa-building"></i>
+                                    <h5>Informasi Perusahaan</h5>
                                 </div>
                             </div>
-                        </div><!--end card-->
-
-                        {{-- Card Info Singkat Perusahaan --}}
-                        <div class="card">
-                            <div class="border-b card-body border-slate-200 dark:border-zink-500">
-                                <div class="flex">
-                                    <h6 class="grow text-15">
-                                        <i data-lucide="building-2" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i>
-                                        <span class="align-middle">{{ $profile->company_name }}</span>
-                                    </h6>
-                                    <div class="shrink-0">
-                                        <span
-                                            class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-sky-100 border-sky-100 text-sky-500 dark:bg-sky-400/20 dark:border-transparent">Active</span>
-                                    </div>
+                            <div class="cp-card-body">
+                                <table class="cp-info-table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Nama Perusahaan</th>
+                                            <td><strong>{{ $profile->company_name ?? '-' }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Title</th>
+                                            <td>{{ $profile->title ?: '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tagline</th>
+                                            <td><em>{{ $profile->tagline ?: '-' }}</em></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Urutan Tampil</th>
+                                            <td>
+                                                <span class="cp-badge">{{ $profile->order ?? 0 }}</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            {{-- Timestamps --}}
+                            <div class="cp-timestamps">
+                                <div class="cp-ts-item">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    Dibuat:
+                                    <span>{{ $profile->created_at ? $profile->created_at->format('d M Y, H:i') : '-' }}</span>
+                                </div>
+                                <div class="cp-ts-item">
+                                    <i class="fas fa-calendar-check"></i>
+                                    Diperbarui:
+                                    <span>{{ $profile->updated_at ? $profile->updated_at->format('d M Y, H:i') : '-' }}</span>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div class="flex">
-                                    <h6 class="grow text-15">
-                                        <i data-lucide="quote"
-                                            class="inline-block text-orange-500 size-4 ltr:mr-1 rtl:ml-1"></i>
-                                        <span
-                                            class="align-middle text-slate-500 dark:text-zink-200 font-normal italic">"{{ $profile->tagline }}"</span>
-                                    </h6>
-                                </div>
-                            </div>
-                        </div><!--end card-->
-
+                        </div>
                     </div>
-                </div><!--end col-->
 
-                {{-- RIGHT COLUMN: Detail Company Profile --}}
-                <div class="xl:col-span-8">
-                    <div class="card">
-                        <div class="card-body">
-
-                            {{-- Dropdown Edit / Delete (pojok kanan atas) --}}
-                            <div class="relative ltr:float-right rtl:float-left dropdown">
-                                <button
-                                    class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20"
-                                    id="companyProfileMenu" data-bs-toggle="dropdown">
-                                    <i data-lucide="more-horizontal" class="size-3"></i>
-                                </button>
-                                <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600"
-                                    aria-labelledby="companyProfileMenu">
-                                    <li>
-                                        <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200"
-                                            href="{{ route('home.edit') }}">
-                                            <i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i>
-                                            <span class="align-middle">Edit</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                    {{-- Deskripsi --}}
+                    <div class="col-xl-7 col-lg-6">
+                        <div class="cp-card" style="height: calc(100% - 1.875rem);">
+                            <div class="cp-card-header">
+                                <div class="cp-card-header-left">
+                                    <i class="fas fa-align-left"></i>
+                                    <h5>Deskripsi Perusahaan</h5>
+                                </div>
                             </div>
-
-                            {{-- Badge & Nama Perusahaan --}}
-                            <span
-                                class="px-2.5 py-0.5 text-xs inline-block font-medium rounded border bg-sky-100 border-sky-100 text-sky-500 dark:bg-sky-400/20 dark:border-transparent">Company
-                                Profile</span>
-                            <h5 class="mt-3 mb-1">{{ $profile->company_name }}</h5>
-                            <ul class="flex flex-wrap items-center gap-4 mb-5 text-slate-500 dark:text-zink-200">
-                                <li><i data-lucide="tag" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span
-                                        class="font-medium italic">"{{ $profile->tagline }}"</span></li>
-                            </ul>
-
-                            {{-- Section: Deskripsi --}}
-                            <div class="mt-5" id="section-description">
-                                <h6 class="mb-3 text-15">Tentang Perusahaan:</h6>
-                                <p class="mb-2 text-slate-500 dark:text-zink-200">
-                                    {{ $profile->description }}
-                                </p>
-                            </div>
-
-                            {{-- Section: Visi --}}
-                            <div class="mt-5" id="section-vision">
-                                <h6 class="mb-3 text-15">Visi:</h6>
-                                <div
-                                    class="flex items-start gap-3 p-4 border rounded-md border-slate-200 dark:border-zink-500">
-                                    <div class="flex items-center justify-center shrink-0">
-                                        <i data-lucide="eye"
-                                            class="w-6 h-6 text-custom-500 fill-custom-100 dark:fill-custom-500/20"></i>
+                            <div class="cp-card-body">
+                                @if ($profile->description)
+                                    <div class="cp-desc-block">
+                                        {{ $profile->description }}
                                     </div>
-                                    <p class="text-slate-500 dark:text-zink-200">{{ $profile->vision }}</p>
+                                @else
+                                    <div class="cp-empty">
+                                        <i class="fas fa-file-alt"></i>
+                                        <p>Deskripsi belum diisi.</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- ── Statistik & Visual ── --}}
+                <div class="cp-card">
+                    <div class="cp-card-header">
+                        <div class="cp-card-header-left">
+                            <i class="fas fa-chart-bar"></i>
+                            <h5>Statistik & Visual</h5>
+                        </div>
+                    </div>
+                    <div class="cp-card-body">
+                        <div class="row g-3">
+
+                            {{-- Count --}}
+                            <div class="col-lg-4 col-md-6">
+                                <div class="cp-stat-box">
+                                    <div class="cp-stat-icon-circle">
+                                        <i class="fas fa-hashtag"></i>
+                                    </div>
+                                    <div>
+                                        <div class="cp-stat-big">{{ $profile->count ?: '—' }}</div>
+                                        <div class="cp-stat-label">Count / Angka Statistik</div>
+                                        <div class="cp-stat-caption">Nilai numerik yang ditampilkan</div>
+                                    </div>
                                 </div>
                             </div>
 
-                            {{-- Section: Misi --}}
-                            <div class="mt-5" id="section-mission">
-                                <h6 class="mb-3 text-15">Misi:</h6>
-                                <div
-                                    class="flex items-start gap-3 p-4 border rounded-md border-slate-200 dark:border-zink-500">
-                                    <div class="flex items-center justify-center shrink-0">
-                                        <i data-lucide="target"
-                                            class="w-6 h-6 text-custom-500 fill-custom-100 dark:fill-custom-500/20"></i>
+                            {{-- Icon Title --}}
+                            <div class="col-lg-4 col-md-6">
+                                <div class="cp-stat-box">
+                                    <div class="cp-stat-icon-circle">
+                                        <i class="fas fa-tag"></i>
                                     </div>
-                                    <p class="text-slate-500 dark:text-zink-200">{{ $profile->mission }}</p>
+                                    <div>
+                                        <div class="cp-stat-label">Icon Title</div>
+                                        <div class="cp-stat-value">{{ $profile->icon_title ?: '-' }}</div>
+                                        <div class="cp-stat-caption">Label utama statistik</div>
+                                    </div>
                                 </div>
                             </div>
 
-                            {{-- Section: Tabel Detail --}}
-                            <div class="mt-5">
-                                <h6 class="mb-3 text-15">Detail Informasi:</h6>
-                                <div class="overflow-x-auto">
-                                    <table class="w-full">
-                                        <tbody>
-                                            <tr>
-                                                <th
-                                                    class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">
-                                                    Nama Perusahaan</th>
-                                                <td class="px-3.5 py-2.5 border-b border-transparent">
-                                                    {{ $profile->company_name }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th
-                                                    class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">
-                                                    Tagline</th>
-                                                <td class="px-3.5 py-2.5 border-b border-transparent">
-                                                    {{ $profile->tagline }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th
-                                                    class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">
-                                                    Visi</th>
-                                                <td class="px-3.5 py-2.5 border-b border-transparent">
-                                                    {{ $profile->vision }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th
-                                                    class="px-3.5 py-2.5 font-semibold border-b border-transparent w-64 ltr:text-left rtl:text-right text-slate-500 dark:text-zink-200">
-                                                    Misi</th>
-                                                <td class="px-3.5 py-2.5 border-b border-transparent">
-                                                    {{ $profile->mission }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            {{-- Icon Subtitle --}}
+                            <div class="col-lg-4 col-md-6">
+                                <div class="cp-stat-box">
+                                    <div class="cp-stat-icon-circle">
+                                        <i class="fas fa-info"></i>
+                                    </div>
+                                    <div>
+                                        <div class="cp-stat-label">Icon Subtitle</div>
+                                        <div class="cp-stat-value">{{ $profile->icon_subtitle ?: '-' }}</div>
+                                        <div class="cp-stat-caption">Sub-label statistik</div>
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
-                    </div><!--end card-->
-                </div><!--end col-->
+                    </div>
+                </div>
 
-            </div><!--end grid-->
+                {{-- ── Bottom Edit Button ── --}}
+                <div class="d-flex justify-content-end mb-2">
+                    <a href="{{ route('sigma.company-profile.edit') }}" class="btn-fillow px-4">
+                        <i class="fas fa-edit"></i> Edit Semua Data
+                    </a>
+                </div>
+            @else
+                {{-- State kosong: belum ada data --}}
+                <div class="cp-card">
+                    <div class="cp-card-body">
+                        <div class="cp-empty" style="padding: 4rem 2rem;">
+                            <i class="fas fa-building"
+                                style="font-size:3rem; color:#886CC0; opacity:.3; margin-bottom:1rem; display:block;"></i>
+                            <h5 style="color:#3d4461; font-weight:600; margin-bottom:8px;">Belum Ada Data Company Profile
+                            </h5>
+                            <p style="color:#9ca3af; margin-bottom: 1.5rem;">Tambahkan informasi perusahaan Anda untuk
+                                ditampilkan di halaman publik.</p>
+                            <a href="{{ route('sigma.company-profile.edit') }}" class="btn-fillow px-5">
+                                <i class="fas fa-plus me-1"></i> Tambah Data Sekarang
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
         </div>
-        <!-- container-fluid -->
     </div>
-
 @endsection
