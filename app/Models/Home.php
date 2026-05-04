@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CompanyProfile extends Model
+class Home extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'company_name',
-        'tagline',
-        'description',
-        'vision',
-        'mision'
+        'name', 
+        'headline', 
+        'highlight', 
+        'description', 
+        'video',  
+        'banner'
     ];
 }

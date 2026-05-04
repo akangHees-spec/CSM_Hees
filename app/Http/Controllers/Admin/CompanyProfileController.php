@@ -31,35 +31,23 @@ class CompanyProfileController extends Controller
     }
 
     /**
-     * Store atau update company profile (upsert — cocok untuk single-record).
-     * Fillable model: company_name, banner, title, tagline, description,
-     *                 count, icon_title, icon_subtitle, order
+     * Store atau update company profile (upsert — single-record).
+     * Fillable: company_name, tagline, description, vision, mision
      */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'company_name'  => ['required', 'string', 'max:255'],
-            'banner'        => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'title'         => ['nullable', 'string', 'max:255'],
-            'tagline'       => ['nullable', 'string', 'max:255'],
-            'description'   => ['required', 'string'],
-            'count'         => ['nullable', 'string', 'max:255'],
-            'icon_title'    => ['nullable', 'string', 'max:255'],
-            'icon_subtitle' => ['nullable', 'string', 'max:255'],
-            'order'         => ['nullable', 'integer', 'min:0'],
+            'company_name' => ['required', 'string', 'max:255'],
+            'tagline'      => ['nullable', 'string', 'max:255'],
+            'description'  => ['required', 'string'],
+            'vision'       => ['nullable', 'string'],
+            'mision'       => ['nullable', 'string'],
         ]);
-
-        // Tangani upload banner — pertahankan lama jika tidak ada file baru
-        if ($request->hasFile('banner')) {
-            $validated['banner'] = $request->file('banner')->store('company-profile', 'public');
-        } else {
-            unset($validated['banner']);
-        }
 
         CompanyProfile::updateOrCreate([], $validated);
 
         return redirect()
-            ->route('sigma.company-profile.index')
+            ->route('admin.company-profile.index')
             ->with('success', 'Company profile berhasil diperbarui.');
     }
 }

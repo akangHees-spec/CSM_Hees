@@ -43,7 +43,7 @@
 
             <!-- Home -->
             <li>
-                <a href="{{ route('sigma.company-profile.index') }}" aria-expanded="false">
+                <a href="{{ route('admino.home.index') }}" aria-expanded="false">
                     <i class="fas fa-home"></i>
                     <span class="nav-text">Home</span>
                 </a>

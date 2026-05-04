@@ -1,567 +1,388 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Home - Company Profile')
+@section('title', 'Home – Hero Section')
 
 @section('content')
-    <style>
-        /* ─── Base ───────────────────────────────────────── */
-        .cp-page {
-            padding-bottom: 2.5rem;
-        }
-
-        /* ─── Hero Card (Banner) ─────────────────────────── */
-        .cp-hero {
-            position: relative;
-            border-radius: 1.5rem;
-            overflow: hidden;
-            margin-bottom: 1.875rem;
-            min-height: 260px;
-            display: flex;
-            align-items: flex-end;
-            background: linear-gradient(135deg, #886CC0 0%, #5d44a2 100%);
-            box-shadow: 0 0.625rem 1.25rem 0 rgba(0, 0, 0, 0.08);
-        }
-
-        .cp-hero-img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-        }
-
-        .cp-hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(30, 10, 60, 0.80) 0%, rgba(30, 10, 60, 0.25) 55%, transparent 100%);
-            z-index: 2;
-        }
-
-        .cp-hero-body {
-            position: relative;
-            z-index: 3;
-            padding: 2rem 2.25rem;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .cp-hero-body .cp-company-name {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #fff;
-            margin: 0 0 4px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-        }
-
-        .cp-hero-body .cp-title-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(6px);
-            color: #fff;
-            border-radius: 2rem;
-            padding: 4px 14px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .cp-hero-body .cp-tagline {
-            color: rgba(255, 255, 255, 0.82);
-            font-size: 0.9rem;
-            font-style: italic;
-            margin-top: 6px;
-        }
-
-        .cp-hero-no-banner {
-            position: relative;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .cp-hero-no-banner i {
-            font-size: 2.5rem;
-            color: rgba(255, 255, 255, 0.35);
-            margin-bottom: 12px;
-        }
-
-        .cp-hero-no-banner p {
-            color: rgba(255, 255, 255, 0.6);
-            margin: 0;
-            font-size: 0.9rem;
-        }
-
-        /* ─── Fillow-style Card ──────────────────────────── */
-        .cp-card {
-            background: #fff;
-            border-radius: 1.25rem;
-            box-shadow: 0 0.625rem 1.25rem 0 rgba(0, 0, 0, 0.05);
-            margin-bottom: 1.875rem;
-            border: 0;
-            overflow: hidden;
-        }
-
-        .cp-card-header {
-            padding: 1.1rem 1.75rem;
-            border-bottom: 1px solid #f0f1f3;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .cp-card-header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cp-card-header i {
-            color: #886CC0;
-            font-size: 1rem;
-        }
-
-        .cp-card-header h5 {
-            margin: 0;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #000;
-        }
-
-        .cp-card-body {
-            padding: 1.75rem;
-        }
-
-        /* ─── Info Table ─────────────────────────────────── */
-        .cp-info-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .cp-info-table tr {
-            border-bottom: 1px solid #f5f6f8;
-        }
-
-        .cp-info-table tr:last-child {
-            border-bottom: 0;
-        }
-
-        .cp-info-table th {
-            padding: 0.75rem 0;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            width: 38%;
-            vertical-align: top;
-        }
-
-        .cp-info-table td {
-            padding: 0.75rem 0;
-            font-size: 0.875rem;
-            color: #3d4461;
-            vertical-align: top;
-        }
-
-        .cp-info-table td strong {
-            color: #000;
-            font-weight: 600;
-        }
-
-        /* ─── Badge ──────────────────────────────────────── */
-        .cp-badge {
-            display: inline-block;
-            background: #f0ebff;
-            color: #886CC0;
-            border-radius: 2rem;
-            padding: 3px 12px;
-            font-size: 0.78rem;
-            font-weight: 600;
-        }
-
-        .cp-badge-gray {
-            background: #f0f1f5;
-            color: #717579;
-        }
-
-        /* ─── Description block ──────────────────────────── */
-        .cp-desc-block {
-            background: #f8f9fc;
-            border-radius: 1rem;
-            padding: 1.25rem 1.5rem;
-            font-size: 0.875rem;
-            color: #717579;
-            line-height: 1.85;
-            border-left: 3px solid #886CC0;
-        }
-
-        /* ─── Stat Grid ──────────────────────────────────── */
-        .cp-stat-box {
-            border: 1px solid #EBEEF2;
-            border-radius: 1.25rem;
-            padding: 1.5rem 1.25rem;
-            text-align: center;
-            background: #fff;
-            height: 100%;
-            transition: box-shadow 0.2s, transform 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .cp-stat-box:hover {
-            box-shadow: 0 8px 24px rgba(136, 108, 192, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .cp-stat-icon-circle {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: #f0ebff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .cp-stat-icon-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .cp-stat-icon-circle i {
-            color: #886CC0;
-            font-size: 1.4rem;
-        }
-
-        .cp-stat-big {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #886CC0;
-            line-height: 1;
-        }
-
-        .cp-stat-label {
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #3d4461;
-        }
-
-        .cp-stat-sub {
-            font-size: 0.75rem;
-            color: #9ca3af;
-        }
-
-        .cp-stat-value {
-            font-size: 0.875rem;
-            color: #3d4461;
-            font-weight: 500;
-        }
-
-        .cp-stat-caption {
-            font-size: 0.75rem;
-            color: #9ca3af;
-            margin-top: 2px;
-        }
-
-        /* ─── Timestamp row ──────────────────────────────── */
-        .cp-timestamps {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            padding: 1rem 1.75rem;
-            background: #fafbfc;
-            border-top: 1px solid #f0f1f3;
-        }
-
-        .cp-timestamps .cp-ts-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.78rem;
-            color: #9ca3af;
-        }
-
-        .cp-timestamps .cp-ts-item i {
-            color: #886CC0;
-            font-size: 0.75rem;
-        }
-
-        .cp-timestamps .cp-ts-item span {
-            color: #3d4461;
-            font-weight: 500;
-        }
-
-        /* ─── Edit Button ────────────────────────────────── */
-        .btn-fillow {
-            background: #886CC0;
-            color: #fff;
-            border-radius: 0.75rem;
-            border: none;
-            padding: 0.5rem 1.25rem;
-            font-weight: 500;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-        }
-
-        .btn-fillow:hover {
-            background: #6e52a4;
-            color: #fff;
-        }
-
-        /* ─── Empty state ────────────────────────────────── */
-        .cp-empty {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: #9ca3af;
-        }
-
-        .cp-empty i {
-            font-size: 2.5rem;
-            margin-bottom: 12px;
-            opacity: 0.4;
-            display: block;
-        }
-
-        .cp-empty p {
-            margin: 0;
-            font-size: 0.875rem;
-        }
-    </style>
-
-    <div class="content-body cp-page">
+    <div class="content-body">
         <div class="container-fluid">
 
             {{-- Breadcrumb --}}
             <div class="row page-titles">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Company Profile</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Admin</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                 </ol>
             </div>
 
             {{-- Alert Success --}}
             @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show" style="border-radius: 0.75rem;" role="alert">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fas fa-check-circle me-2"></i>
                     <strong>Berhasil!</strong> {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
 
-            @if ($profile)
+            @if ($home)
 
-                {{-- ── Hero / Banner ── --}}
-                <div class="cp-hero">
-                    @if ($profile->banner)
-                        <img src="{{ asset('storage/' . $profile->banner) }}" alt="Banner" class="cp-hero-img">
-                        <div class="cp-hero-overlay"></div>
-                        <div class="cp-hero-body">
-                            <div>
-                                <h2 class="cp-company-name">{{ $profile->company_name }}</h2>
-                                @if ($profile->title)
-                                    <span class="cp-title-badge">{{ $profile->title }}</span>
-                                @endif
-                                @if ($profile->tagline)
-                                    <p class="cp-tagline"><i class="fas fa-quote-left fa-xs me-1"
-                                            style="opacity:.5;"></i>{{ $profile->tagline }}</p>
-                                @endif
+                {{-- ── Profile / Hero Header ── --}}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="profile card card-body px-3 pt-3 pb-0">
+                            <div class="profile-head">
+                                <div class="photo-content">
+                                    {{-- Banner sebagai cover photo --}}
+                                    <div class="cover-photo rounded"
+                                        @if ($home->banner) style="background-image: url('{{ asset('storage/' . $home->banner) }}'); background-size: cover; background-position: center;" @endif>
+                                    </div>
+                                </div>
+                                <div class="profile-info">
+                                    <div class="profile-photo">
+                                        <div class="img-fluid rounded-circle d-flex align-items-center justify-content-center"
+                                            style="width:80px;height:80px;background:linear-gradient(135deg,#6259ca,#9b59b6);">
+                                            <i class="fas fa-home text-white" style="font-size:1.8rem;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="profile-details">
+                                        <div class="profile-name px-3 pt-2">
+                                            <h4 class="text-primary mb-0">{{ $home->name }}</h4>
+                                            <p>{{ $home->headline }}</p>
+                                        </div>
+                                        <div class="profile-email px-2 pt-2">
+                                            <h4 class="text-muted mb-0">{{ $home->highlight ?: '-' }}</h4>
+                                            <p>Highlight</p>
+                                        </div>
+                                        <div class="dropdown ms-auto">
+                                            <a href="{{ route('admino.home.edit') }}" class="btn btn-primary">
+                                                <i class="fas fa-edit me-1"></i> Edit Hero
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    @else
-                        <div class="cp-hero-no-banner">
-                            <i class="fas fa-image"></i>
-                            <p>Belum ada banner — <a href="{{ route('sigma.company-profile.edit') }}"
-                                    style="color:rgba(255,255,255,0.8); text-decoration:underline;">tambahkan sekarang</a>
-                            </p>
-                        </div>
-                        <div class="cp-hero-body" style="padding-top:0;">
-                            <div></div>
-                            <a href="{{ route('sigma.company-profile.edit') }}" class="btn-fillow">
-                                <i class="fas fa-edit"></i> Edit Profil
-                            </a>
-                        </div>
-                    @endif
+                    </div>
                 </div>
 
-                {{-- ── Row: Info + Deskripsi ── --}}
+                {{-- ── Row Konten ── --}}
                 <div class="row">
 
-                    {{-- Informasi Perusahaan --}}
-                    <div class="col-xl-5 col-lg-6">
-                        <div class="cp-card">
-                            <div class="cp-card-header">
-                                <div class="cp-card-header-left">
-                                    <i class="fas fa-building"></i>
-                                    <h5>Informasi Perusahaan</h5>
-                                </div>
-                            </div>
-                            <div class="cp-card-body">
-                                <table class="cp-info-table">
-                                    <tbody>
-                                        <tr>
-                                            <th>Nama Perusahaan</th>
-                                            <td><strong>{{ $profile->company_name ?? '-' }}</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Title</th>
-                                            <td>{{ $profile->title ?: '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Tagline</th>
-                                            <td><em>{{ $profile->tagline ?: '-' }}</em></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Urutan Tampil</th>
-                                            <td>
-                                                <span class="cp-badge">{{ $profile->order ?? 0 }}</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{-- Timestamps --}}
-                            <div class="cp-timestamps">
-                                <div class="cp-ts-item">
-                                    <i class="fas fa-calendar-plus"></i>
-                                    Dibuat:
-                                    <span>{{ $profile->created_at ? $profile->created_at->format('d M Y, H:i') : '-' }}</span>
-                                </div>
-                                <div class="cp-ts-item">
-                                    <i class="fas fa-calendar-check"></i>
-                                    Diperbarui:
-                                    <span>{{ $profile->updated_at ? $profile->updated_at->format('d M Y, H:i') : '-' }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{-- Kolom Kiri --}}
+                    <div class="col-xl-4">
+                        <div class="row">
 
-                    {{-- Deskripsi --}}
-                    <div class="col-xl-7 col-lg-6">
-                        <div class="cp-card" style="height: calc(100% - 1.875rem);">
-                            <div class="cp-card-header">
-                                <div class="cp-card-header-left">
-                                    <i class="fas fa-align-left"></i>
-                                    <h5>Deskripsi Perusahaan</h5>
-                                </div>
-                            </div>
-                            <div class="cp-card-body">
-                                @if ($profile->description)
-                                    <div class="cp-desc-block">
-                                        {{ $profile->description }}
-                                    </div>
-                                @else
-                                    <div class="cp-empty">
-                                        <i class="fas fa-file-alt"></i>
-                                        <p>Deskripsi belum diisi.</p>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                {{-- ── Statistik & Visual ── --}}
-                <div class="cp-card">
-                    <div class="cp-card-header">
-                        <div class="cp-card-header-left">
-                            <i class="fas fa-chart-bar"></i>
-                            <h5>Statistik & Visual</h5>
-                        </div>
-                    </div>
-                    <div class="cp-card-body">
-                        <div class="row g-3">
-
-                            {{-- Count --}}
-                            <div class="col-lg-4 col-md-6">
-                                <div class="cp-stat-box">
-                                    <div class="cp-stat-icon-circle">
-                                        <i class="fas fa-hashtag"></i>
-                                    </div>
-                                    <div>
-                                        <div class="cp-stat-big">{{ $profile->count ?: '—' }}</div>
-                                        <div class="cp-stat-label">Count / Angka Statistik</div>
-                                        <div class="cp-stat-caption">Nilai numerik yang ditampilkan</div>
+                            {{-- Status Konten --}}
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="profile-statistics">
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h3 class="m-b-0">
+                                                            @if ($home->banner)
+                                                                <i class="fas fa-check-circle text-success"></i>
+                                                            @else
+                                                                <i class="fas fa-times-circle text-danger"></i>
+                                                            @endif
+                                                        </h3>
+                                                        <span>Banner</span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <h3 class="m-b-0">
+                                                            @if ($home->video)
+                                                                <i class="fas fa-check-circle text-success"></i>
+                                                            @else
+                                                                <i class="fas fa-times-circle text-danger"></i>
+                                                            @endif
+                                                        </h3>
+                                                        <span>Video</span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <h3 class="m-b-0">
+                                                            @if ($home->highlight)
+                                                                <i class="fas fa-check-circle text-success"></i>
+                                                            @else
+                                                                <i class="fas fa-times-circle text-danger"></i>
+                                                            @endif
+                                                        </h3>
+                                                        <span>Highlight</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <a href="{{ route('admino.home.edit') }}" class="btn btn-primary mb-1">
+                                                        <i class="fas fa-edit me-1"></i> Edit Data
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- Icon Title --}}
-                            <div class="col-lg-4 col-md-6">
-                                <div class="cp-stat-box">
-                                    <div class="cp-stat-icon-circle">
-                                        <i class="fas fa-tag"></i>
-                                    </div>
-                                    <div>
-                                        <div class="cp-stat-label">Icon Title</div>
-                                        <div class="cp-stat-value">{{ $profile->icon_title ?: '-' }}</div>
-                                        <div class="cp-stat-caption">Label utama statistik</div>
+                            {{-- Banner Preview --}}
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="text-primary d-inline">Banner Preview</h5>
+                                        @if ($home->banner)
+                                            <img src="{{ asset('storage/' . $home->banner) }}" alt="Banner"
+                                                class="img-fluid mt-4 mb-4 w-100 rounded">
+                                        @else
+                                            <div class="mt-4 mb-4 d-flex align-items-center justify-content-center rounded"
+                                                style="height:140px;background:#f8f7ff;border:2px dashed #d3cef5;">
+                                                <div class="text-center text-muted">
+                                                    <i class="fas fa-image" style="font-size:2rem;opacity:.4;"></i>
+                                                    <p class="mb-0 mt-2" style="font-size:.82rem;">Belum ada banner</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <h5>{{ $home->name }}</h5>
+                                        <p class="mb-0">{{ Str::limit($home->description, 100) }}</p>
                                     </div>
                                 </div>
                             </div>
 
-                            {{-- Icon Subtitle --}}
-                            <div class="col-lg-4 col-md-6">
-                                <div class="cp-stat-box">
-                                    <div class="cp-stat-icon-circle">
-                                        <i class="fas fa-info"></i>
-                                    </div>
-                                    <div>
-                                        <div class="cp-stat-label">Icon Subtitle</div>
-                                        <div class="cp-stat-value">{{ $profile->icon_subtitle ?: '-' }}</div>
-                                        <div class="cp-stat-caption">Sub-label statistik</div>
+                            {{-- Video --}}
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="text-primary d-inline">Link Video</h5>
+                                        @if ($home->video)
+                                            <div class="media pt-3 pb-3">
+                                                <div class="d-flex align-items-center justify-content-center me-3 rounded"
+                                                    style="width:50px;height:50px;background:linear-gradient(135deg,#6259ca,#9b59b6);flex-shrink:0;">
+                                                    <i class="fas fa-play text-white"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="m-b-5">Video Hero</h5>
+                                                    <a href="{{ $home->video }}" target="_blank"
+                                                        style="font-size:.8rem;word-break:break-all;">
+                                                        {{ Str::limit($home->video, 50) }}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <p class="text-muted mt-3 mb-0" style="font-size:.85rem;">
+                                                <i class="fas fa-info-circle me-1"></i> Belum ada link video.
+                                            </p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                </div>
 
-                {{-- ── Bottom Edit Button ── --}}
-                <div class="d-flex justify-content-end mb-2">
-                    <a href="{{ route('sigma.company-profile.edit') }}" class="btn-fillow px-4">
-                        <i class="fas fa-edit"></i> Edit Semua Data
-                    </a>
+                    {{-- Kolom Kanan --}}
+                    <div class="col-xl-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="profile-tab">
+                                    <div class="custom-tab-1">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a href="#hero-detail" data-bs-toggle="tab"
+                                                    class="nav-link active show">Detail</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#hero-description" data-bs-toggle="tab"
+                                                    class="nav-link">Deskripsi</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#hero-info" data-bs-toggle="tab" class="nav-link">Info</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+
+                                            {{-- Tab: Detail --}}
+                                            <div id="hero-detail" class="tab-pane fade active show">
+                                                <div class="pt-4">
+                                                    <div class="profile-personal-info">
+                                                        <h4 class="text-primary mb-4">Informasi Hero Section</h4>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Nama <span class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ $home->name }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Headline <span
+                                                                        class="pull-end">:</span></h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                <span>{{ $home->headline }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Highlight <span
+                                                                        class="pull-end">:</span></h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                @if ($home->highlight)
+                                                                    <span
+                                                                        class="badge badge-primary light">{{ $home->highlight }}</span>
+                                                                @else
+                                                                    <span class="text-muted">-</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Video <span class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                @if ($home->video)
+                                                                    <a href="{{ $home->video }}" target="_blank"
+                                                                        class="text-primary"
+                                                                        style="word-break:break-all;font-size:.875rem;">
+                                                                        {{ $home->video }}
+                                                                    </a>
+                                                                @else
+                                                                    <span class="text-muted">-</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-3 col-5">
+                                                                <h5 class="f-w-500">Banner <span class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-9 col-7">
+                                                                @if ($home->banner)
+                                                                    <span class="badge badge-success light">
+                                                                        <i class="fas fa-check me-1"></i>Tersedia
+                                                                    </span>
+                                                                @else
+                                                                    <span class="badge badge-warning light">
+                                                                        <i class="fas fa-exclamation me-1"></i>Belum ada
+                                                                    </span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Tab: Deskripsi --}}
+                                            <div id="hero-description" class="tab-pane fade">
+                                                <div class="profile-about-me">
+                                                    <div class="pt-4 border-bottom-1 pb-3">
+                                                        <h4 class="text-primary">Deskripsi Hero</h4>
+                                                        @if ($home->description)
+                                                            <p class="mb-2">{{ $home->description }}</p>
+                                                        @else
+                                                            <p class="text-muted">Deskripsi belum diisi.</p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="profile-skills mb-5 pt-4">
+                                                    <h4 class="text-primary mb-2">Konten Aktif</h4>
+                                                    @if ($home->name)
+                                                        <span class="btn btn-primary light btn-xs mb-1">Nama</span>
+                                                    @endif
+                                                    @if ($home->headline)
+                                                        <span class="btn btn-primary light btn-xs mb-1">Headline</span>
+                                                    @endif
+                                                    @if ($home->highlight)
+                                                        <span class="btn btn-success light btn-xs mb-1">Highlight</span>
+                                                    @endif
+                                                    @if ($home->description)
+                                                        <span class="btn btn-primary light btn-xs mb-1">Deskripsi</span>
+                                                    @endif
+                                                    @if ($home->video)
+                                                        <span class="btn btn-info light btn-xs mb-1">Video</span>
+                                                    @endif
+                                                    @if ($home->banner)
+                                                        <span class="btn btn-warning light btn-xs mb-1">Banner</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            {{-- Tab: Info --}}
+                                            <div id="hero-info" class="tab-pane fade">
+                                                <div class="pt-4">
+                                                    <div class="profile-personal-info">
+                                                        <h4 class="text-primary mb-4">Informasi Sistem</h4>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-4 col-5">
+                                                                <h5 class="f-w-500">ID Record <span
+                                                                        class="pull-end">:</span></h5>
+                                                            </div>
+                                                            <div class="col-sm-8 col-7">
+                                                                <span>#{{ $home->id }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-4 col-5">
+                                                                <h5 class="f-w-500">Dibuat <span class="pull-end">:</span>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col-sm-8 col-7">
+                                                                <span>{{ $home->created_at?->format('d M Y, H:i') ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2">
+                                                            <div class="col-sm-4 col-5">
+                                                                <h5 class="f-w-500">Diperbarui <span
+                                                                        class="pull-end">:</span></h5>
+                                                            </div>
+                                                            <div class="col-sm-8 col-7">
+                                                                <span>{{ $home->updated_at?->format('d M Y, H:i') ?? '-' }}</span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             @else
-                {{-- State kosong: belum ada data --}}
-                <div class="cp-card">
-                    <div class="cp-card-body">
-                        <div class="cp-empty" style="padding: 4rem 2rem;">
-                            <i class="fas fa-building"
-                                style="font-size:3rem; color:#886CC0; opacity:.3; margin-bottom:1rem; display:block;"></i>
-                            <h5 style="color:#3d4461; font-weight:600; margin-bottom:8px;">Belum Ada Data Company Profile
-                            </h5>
-                            <p style="color:#9ca3af; margin-bottom: 1.5rem;">Tambahkan informasi perusahaan Anda untuk
-                                ditampilkan di halaman publik.</p>
-                            <a href="{{ route('sigma.company-profile.edit') }}" class="btn-fillow px-5">
-                                <i class="fas fa-plus me-1"></i> Tambah Data Sekarang
-                            </a>
+                {{-- State kosong --}}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body text-center" style="padding:4rem 2rem;">
+                                <i class="fas fa-home"
+                                    style="font-size:3rem;color:#6259ca;opacity:.3;display:block;margin-bottom:1rem;"></i>
+                                <h5 style="color:#3d4461;font-weight:600;margin-bottom:8px;">
+                                    Belum Ada Data Hero Section
+                                </h5>
+                                <p style="color:#9ca3af;margin-bottom:1.5rem;">
+                                    Tambahkan konten hero untuk ditampilkan di halaman utama website.
+                                </p>
+                                <a href="{{ route('admino.home.edit') }}" class="btn btn-primary px-5">
+                                    <i class="fas fa-plus me-1"></i> Tambah Data Sekarang
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             @endif
 
         </div>

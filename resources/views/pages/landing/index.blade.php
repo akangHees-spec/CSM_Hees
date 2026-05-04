@@ -47,54 +47,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stat-item">
-                            <div class="stat-icon">
-                                <i class="bi bi-trophy"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h4>3x Penghargaan</h4>
-                                <p class="mb-0">Inovasi Teknologi</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stat-item">
-                            <div class="stat-icon">
-                                <i class="bi bi-briefcase"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h4>6.5k Proyek</h4>
-                                <p class="mb-0">Software Development</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stat-item">
-                            <div class="stat-icon">
-                                <i class="bi bi-graph-up"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h4>80k+ Pengguna</h4>
-                                <p class="mb-0">Aplikasi & Sistem</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="stat-item">
-                            <div class="stat-icon">
-                                <i class="bi bi-award"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h4>6x Sertifikasi</h4>
-                                <p class="mb-0">Standar Internasional</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </section><!-- /Hero Section -->

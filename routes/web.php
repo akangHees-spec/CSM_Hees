@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CompanyProfileController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -18,14 +19,14 @@ Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Admin - dengan middleware auth
-Route::prefix('sigma')->name('sigma.')->middleware('auth')->group(function () {
+Route::prefix('admino')->name('admino.')->middleware('auth')->group(function () {
     // Company Profile
     Route::get('/company-profile', [CompanyProfileController::class, 'index'])->name('company-profile.index');
     Route::get('/company-profile/edit', [CompanyProfileController::class, 'edit'])->name('company-profile.edit');
     Route::post('/company-profile/store', [CompanyProfileController::class, 'store'])->name('company-profile.store');
 
-    // Halaman lain (bisa ditambah controller tersendiri nanti)
-    Route::get('/home', [CompanyProfileController::class, 'index'])->name('home.index');
-    Route::get('/about', [CompanyProfileController::class, 'index'])->name('about.index');
-    Route::get('/contact', [CompanyProfileController::class, 'index'])->name('contact.index');
+    // ── Home / Hero Section ──
+    Route::get('home',          [HomeController::class, 'index'])->name('home.index');
+    Route::get('home/edit',     [HomeController::class, 'edit'])->name('home.edit');
+    Route::post('home',         [HomeController::class, 'store'])->name('home.store');
 });
