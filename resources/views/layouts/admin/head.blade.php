@@ -25,5 +25,8 @@
 
     <!-- Style css -->
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    @stack('styles')
 
 </head>

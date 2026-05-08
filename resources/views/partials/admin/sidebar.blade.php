@@ -51,7 +51,7 @@
 
             <!-- About -->
             <li>
-                <a href="admin/about/index.blade.php" aria-expanded="false">
+                <a href="{{ route('admino.about.index')}}" aria-expanded="false">
                     <i class="fas fa-info-circle"></i>
                     <span class="nav-text">About</span>
                 </a>

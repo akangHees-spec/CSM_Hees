@@ -52,11 +52,6 @@
                                             <h4 class="text-muted mb-0">{{ $home->highlight ?: '-' }}</h4>
                                             <p>Highlight</p>
                                         </div>
-                                        <div class="dropdown ms-auto">
-                                            <a href="{{ route('admino.home.edit') }}" class="btn btn-primary">
-                                                <i class="fas fa-edit me-1"></i> Edit Hero
-                                            </a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

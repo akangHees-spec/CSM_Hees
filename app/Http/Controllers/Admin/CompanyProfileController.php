@@ -15,9 +15,9 @@ class CompanyProfileController extends Controller
      */
     public function index(): View
     {
-        $profile = CompanyProfile::first();
+        $companyProfile = CompanyProfile::firstOrNew([]);
 
-        return view('pages.admin.home.index', compact('profile'));
+        return view('pages.admin.about.index', compact('companyProfile'));
     }
 
     /**
@@ -25,29 +25,28 @@ class CompanyProfileController extends Controller
      */
     public function edit(): View
     {
-        $profile = CompanyProfile::first();
+        $companyProfile = CompanyProfile::firstOrNew([]);
 
-        return view('pages.admin.home.edit', compact('profile'));
+        return view('pages.admin.about.edit', compact('companyProfile'));
     }
 
     /**
      * Store atau update company profile (upsert — single-record).
-     * Fillable: company_name, tagline, description, vision, mision
      */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'company_name' => ['required', 'string', 'max:255'],
             'tagline'      => ['nullable', 'string', 'max:255'],
-            'description'  => ['required', 'string'],
-            'vision'       => ['nullable', 'string'],
-            'mision'       => ['nullable', 'string'],
+            'description'  => ['required', 'string', 'max:10000'],
+            'vision'       => ['nullable', 'string', 'max:1000'],
+            'mision'       => ['nullable', 'string', 'max:10000'],
         ]);
 
         CompanyProfile::updateOrCreate([], $validated);
 
         return redirect()
-            ->route('admin.company-profile.index')
+            ->route('admino.about.index')
             ->with('success', 'Company profile berhasil diperbarui.');
     }
 }
