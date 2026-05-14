@@ -42,37 +42,7 @@
                     </div>
                 </div>
             @else
-                {{-- Profile Header --}}
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="profile card card-body px-3 pt-3 pb-0">
-                            <div class="profile-head">
-                                <div class="photo-content">
-                                    <div class="cover-photo rounded"></div>
-                                </div>
-                                <div class="profile-info">
-                                    <div class="profile-photo">
-                                        <div class="img-fluid rounded-circle d-flex align-items-center justify-content-center"
-                                            style="width:80px;height:80px;background:linear-gradient(135deg,#6259ca,#9b59b6);">
-                                            <i class="fa fa-building text-white" style="font-size:1.8rem;"></i>
-                                        </div>
-                                    </div>
-                                    <div class="profile-details">
-                                        <div class="profile-name px-3 pt-2">
-                                            <h4 class="text-primary mb-0">{{ $companyProfile->company_name }}</h4>
-                                            <p>{{ $companyProfile->tagline }}</p>
-                                        </div>
-                                        <div class="profile-email px-2 pt-2">
-                                            <h4 class="text-muted mb-0">
-                                                {{ Str::limit($companyProfile->description, 60) ?: '-' }}</h4>
-                                            <p>Description</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 {{-- Row Konten --}}
                 <div class="row">

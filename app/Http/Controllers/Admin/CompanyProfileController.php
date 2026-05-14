@@ -15,9 +15,9 @@ class CompanyProfileController extends Controller
      */
     public function index(): View
     {
-        $companyProfile = CompanyProfile::firstOrNew([]);
+        $about = CompanyProfile::firstOrNew([]);
 
-        return view('pages.admin.about.index', compact('companyProfile'));
+        return view('pages.admin.about.index', compact('about'));
     }
 
     /**
@@ -25,9 +25,9 @@ class CompanyProfileController extends Controller
      */
     public function edit(): View
     {
-        $companyProfile = CompanyProfile::firstOrNew([]);
+        $about = CompanyProfile::firstOrNew([]);
 
-        return view('pages.admin.about.edit', compact('companyProfile'));
+        return view('pages.admin.about.edit', compact('about'));
     }
 
     /**

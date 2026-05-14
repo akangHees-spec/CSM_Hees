@@ -115,29 +115,6 @@
                                 </div>
                             </div>
 
-                            {{-- Banner Preview --}}
-                            <div class="col-xl-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="text-primary d-inline">Banner Preview</h5>
-                                        @if ($home->banner)
-                                            <img src="{{ asset('storage/' . $home->banner) }}" alt="Banner"
-                                                class="img-fluid mt-4 mb-4 w-100 rounded">
-                                        @else
-                                            <div class="mt-4 mb-4 d-flex align-items-center justify-content-center rounded"
-                                                style="height:140px;background:#f8f7ff;border:2px dashed #d3cef5;">
-                                                <div class="text-center text-muted">
-                                                    <i class="fas fa-image" style="font-size:2rem;opacity:.4;"></i>
-                                                    <p class="mb-0 mt-2" style="font-size:.82rem;">Belum ada banner</p>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <h5>{{ $home->name }}</h5>
-                                        <p class="mb-0">{{ Str::limit($home->description, 100) }}</p>
-                                    </div>
-                                </div>
-                            </div>
-
                             {{-- Video --}}
                             <div class="col-xl-12">
                                 <div class="card">
